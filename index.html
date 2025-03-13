@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Timer</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <button id="startButton">Start</button>
+    <p id="message">Press the button to begin.</p>
+    <audio id="beep" src="soundtrue.mp3"></audio>
+    
+    <script>
+        let startTime;
+        console.log(startTime)
+        let timeout;
+        console.log(timeout);
+
+
+        document.getElementById("startButton").addEventListener("click", function() {
+            document.getElementById("message").textContent = "Wait for the sound...";
+            let delay = Math.random() * 3000 + 1000; // Random delay between 1s and 4s
+            
+            timeout = setTimeout(() => {
+                document.getElementById("beep").play();
+                startTime = performance.now();
+                console.log(startTime)
+            }, delay);
+        });
+
+        document.addEventListener("keydown", function(event) {
+            if (event.code === "Space" && startTime) {
+                let reactionTime = performance.now() - startTime;
+                document.getElementById("message").textContent = `Reaction Time: ${reactionTime.toFixed(2)} ms. Press Start to try again.`;
+                startTime = null;
+            }
+        });
+    </script>
+</body>
+</html>
